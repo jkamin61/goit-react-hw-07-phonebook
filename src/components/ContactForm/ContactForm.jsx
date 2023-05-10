@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../redux/operations';
+
 
 const ContactForm = ({ onAddContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
 
   const handleNameChange = event => {
     setName(event.target.value);
@@ -18,6 +22,7 @@ const ContactForm = ({ onAddContact }) => {
     onAddContact(name, number);
     setName('');
     setNumber('');
+    dispatch(addContact({ name, number }));
   };
 
   return (

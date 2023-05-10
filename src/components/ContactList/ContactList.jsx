@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { deleteContact} from '../redux/operations';
 
 const ContactList = ({ contacts, onDeleteContact }) => {
+
+  const dispatch = useDispatch();
   const handleDeleteContact = (id) => {
     onDeleteContact(id);
+    dispatch(deleteContact(id));
   };
 
   return (
