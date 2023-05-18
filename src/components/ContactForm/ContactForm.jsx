@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../redux/operations';
 
 
@@ -8,6 +8,7 @@ const ContactForm = ({ onAddContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.items);
 
   const handleNameChange = event => {
     setName(event.target.value);
@@ -22,7 +23,10 @@ const ContactForm = ({ onAddContact }) => {
     onAddContact(name, number);
     setName('');
     setNumber('');
-    dispatch(addContact({ name, number }));
+    const duplicateName = contacts.find(contact => contact.name === name);
+    if (!duplicateName) {
+      dispatch(addContact({ name, number }));
+    }
   };
 
   return (
